@@ -1,0 +1,6 @@
+framework module Pods_TypicodeApiFramework_TypicodeApiFrameworkTests {
+  umbrella header "Pods-TypicodeApiFramework-TypicodeApiFrameworkTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
