@@ -1,0 +1,5 @@
+language:
+  - swift
+osx_image: xcode11.3
+script:
+  - xcodebuild -workspace TypicodeApiFramework.xcworkspace -scheme TypicodeApiFramework -sdk iphonesimulator -destination 'platform=iOS Simulator,name:iPhone 11 Pro,OS=13.3' build test | xcpretty -c --test --color

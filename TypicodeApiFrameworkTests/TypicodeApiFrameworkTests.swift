@@ -31,30 +31,48 @@ class TypicodeApiFrameworkTests: XCTestCase {
         }
     }
     
-    func testApiCall() {
+    func testFetchUserData() {
         
-        ApiCall.getUsers { userResponse in
-            if userResponse.status == .success {
-                let userList = userResponse.responseList as! [User]
+        let e = expectation(description: "Expecting a JSON data not nil")
+        
+        var userList: [User] = []
+        ApiCall.getUsers() { apiResponse in
+            switch(apiResponse.status) {
+            case .success:
+                userList  =  apiResponse.responseList as! [User]
                 XCTAssertTrue(userList.count>0)
-            } else {
-                
+                e.fulfill()
+            case .failure:
+                print(apiResponse.error)
             }
         }
         
+        waitForExpectations(timeout: 5.0, handler: nil)
         
     }
     
-    func testApiResponse() {
-        ApiCall.getPosts() { apiResponse in
-            if apiResponse.status == .success {
-                let userList = apiResponse.responseList as! [User]
-                print(userList)
-                XCTAssertTrue(userList.count>0)
-            } else {
+   func testFetchAndFilterPostData() {
+        
+       let e = expectation(description: "Expecting a Posts data not nil")
                 
+        
+        ApiCall.getPosts() { apiResponse in
+            switch(apiResponse.status) {
+            case .success:
+                let _posts = apiResponse.responseList as! [Post]
+                
+                XCTAssertTrue(_posts.count>0)
+                print("Count: \(_posts.count)")
+                let posts = _posts.filter{$0.userId == 1}
+                print("User's Filtered Post Count: \(posts.count)")
+                XCTAssertTrue(_posts.count>=posts.count)
+                e.fulfill()
+            case .failure:
+                print(apiResponse.error)
             }
         }
+
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
 
 }
