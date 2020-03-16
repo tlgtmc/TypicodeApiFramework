@@ -11,6 +11,7 @@ target 'TypicodeApiFramework' do
   pod 'AlamofireSwiftyJSON'
   pod 'AlamofireObjectMapper'
 
+  
   target 'TypicodeApiFrameworkTests' do
     # Pods for testing
   end
